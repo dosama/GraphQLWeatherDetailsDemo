@@ -1,17 +1,25 @@
-import _ from 'lodash';
 import action from '../models/action'
 const initialState = {
-    weatherDetais: null
+    weatherDetails: null,
+    weatherDetailsError: null,
+    isLoading:false
 }
 
 export default function rootReducer(state = initialState, action:action) {
-    let newState = {...state};
-
+ 
     switch (action.type) {
-        case 'SET_WEATHER_DETAILS':
+        case 'GET_WEATHER_DETAILS_SUCCESS':
             return {
-                ...state, weatherDetais: action.payload
+                ...state, weatherDetails: action.payload?.getCityByName,isLoading: false
             };
+            case 'GET_WEATHER_DETAILS_FAILURE':
+                return {
+                    ...state, weatherDetailsError: action.payload,isLoading: false
+                };
+            case 'GET_WEATHER_DETAILS':
+                return {
+                    ...state, isLoading: true
+                };
         default:
             return state;
     }

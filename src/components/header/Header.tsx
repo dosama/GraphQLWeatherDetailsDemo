@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './Header.css';
+import WeatherService from '../../services/weatherService';
 
 function Header() {
-  const [selectedUnit, setSelctedUnit] = useState('metric'); 
+  const [selectedUnit, setSelctedUnit] = useState('metric');
+  const [country, setCountry]= useState('');
+  const weatherService = new WeatherService();
+  const dispatch = useDispatch();
+  const handleCountryChange=(event:any)=>{
+    setCountry(event.target.value);
+      }
   const handleUnitChange=(event:any)=>{
-setSelctedUnit(event.target.value);
+     setSelctedUnit(event.target.value);
   }
+
+  const search=()=>{
+    weatherService.loadWeatherDataAsync(dispatch,country,selectedUnit);
+  }
+
+
   return (
   <div  className="Header">
    <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -15,7 +29,7 @@ setSelctedUnit(event.target.value);
       <div className=" col-md-5 col-lg-5">
         <div className="row">
         <div className="col-md-3 col-lg-3 navbar-brand">Country:</div>
-      <input type="text" className="col-md-6 col-lg-6 form-control"></input>
+      <input type="text" className="col-md-6 col-lg-6 form-control"    value={country}  onChange={handleCountryChange}  ></input>
         </div>
        
       </div>
@@ -34,7 +48,7 @@ setSelctedUnit(event.target.value);
      
       </div>
       <div className="col-md-2 col-lg-2">
-      <button className="btn btn-primary">Search</button>
+      <button className="btn btn-primary" onClick={search}>Search</button>
       </div>
     </div>
   

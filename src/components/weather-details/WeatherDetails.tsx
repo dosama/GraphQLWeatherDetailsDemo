@@ -1,52 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './WeatherDetails.css';
 import Spinner from '../spinner/Spinner';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function WeatherDetails() {
-    const [isLoading, setIsLoading] = useState(false); 
     const weatherDetails = useSelector((state:any) => state.weatherDetails);
-
+    const isLoading = useSelector((state:any) => state.isLoading);
     return (
-
         <div className="WeatherDetails">
             {isLoading ? (
-
                 <Spinner></Spinner>
-
             ) : (
                     <div className="p-4">
                         <div className="row"> <h1>Weather Details</h1></div>
                         <div className="row">
-                        Country: country
+                        Country: {weatherDetails?.country}
                             </div>
                             <div className="row mt-2"><h4>Temprature</h4></div>
                             <div className="row">
-                            Actual: actual
+                            Actual: {weatherDetails?.weather.temperature.actual}
                             </div>
                             <div className="row"> 
-                              FeelsLike: feelsLike
+                              FeelsLike: {weatherDetails?.weather.temperature.feelsLike}
                             </div>
                             <div className="row">
-                              Min: min
+                              Min: {weatherDetails?.weather.temperature.min}
                             </div>
                             <div className="row">
-                                 Max:   max 
+                                 Max: {weatherDetails?.weather.temperature.max} 
                             </div>
-                            <div  className="row">Summary</div>
-                            <div  className="row"> Title:   title </div>
-                            <div  className="row"> Description:   description </div>
+                            <div  className="mt-2 row"><h4>Summary</h4></div>
+                            <div  className="row"> Title:    {weatherDetails?.weather.summary.title} </div>
+                            <div  className="row"> Description:    {weatherDetails?.weather.summary.description} </div>
                            
                         
-                            <div className="row">Wind</div>
-                            <div className="row"> Speed:  speed </div>
-                            <div className="row"> Deg:  deg </div>
+                            <div className="mt-2 row"><h4>Wind</h4></div>
+                            <div className="row"> Speed:   {weatherDetails?.weather.wind.speed} </div>
+                            <div className="row"> Deg:  {weatherDetails?.weather.wind.deg} </div>
                           
                        
-                            <div className="row">Clouds</div>
-                            <div className="row"> All:  all </div>
-                            <div className="row"> Visibility:  visibility </div>
-                            <div className="row"> Humidity:  humidity </div>
+                            <div className="mt-2 row"><h4>Clouds</h4></div>
+                            <div className="row"> All:   {weatherDetails?.weather.clouds.all} </div>
+                            <div className="row"> Visibility:  {weatherDetails?.weather.clouds.visibility} </div>
+                            <div className="row"> Humidity:  {weatherDetails?.weather.clouds.humidity} </div>
                     
 
                     </div>)}
