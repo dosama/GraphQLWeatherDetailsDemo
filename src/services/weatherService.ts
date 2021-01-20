@@ -1,13 +1,11 @@
 import request, { gql } from "graphql-request";
 import actions from "../actions/actions";
-
-import { Dispatch } from "react";
 export default class WeatherService{
  
-    
-    public loadWeatherDataAsync= (dispatch:Dispatch<any>,country:string,unit:string)=>{
-
-       // Initial action dispatched
+    public loadWeatherDataAsync= (country:string,unit:string)=>{
+         // And then creates and returns the async thunk function:
+  return async function loadWeatherDataThunk(dispatch:any, getState:any) {
+      // Initial action dispatched
        dispatch(actions.GET_WEATHER_DETAILS());
        const query = gql`
        {
@@ -42,6 +40,7 @@ export default class WeatherService{
            dispatch(actions.GET_WEATHER_DETAILS_SUCCESS(data))
          }).catch((err)=>dispatch(actions.GET_WEATHER_DETAILS_FAILURE(err)));
 
-         }
+  }
+    }
 
 }

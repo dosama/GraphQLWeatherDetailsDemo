@@ -16,7 +16,8 @@ function Header() {
   }
 
   const search=()=>{
-    weatherService.loadWeatherDataAsync(dispatch,country,selectedUnit);
+    const loadWeatherDataThunk= weatherService.loadWeatherDataAsync(country,selectedUnit);
+    dispatch(loadWeatherDataThunk);
   }
 
 
