@@ -4,12 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import {createStore,applyMiddleware} from 'redux';
-import rootReducer from './reducers/rootReducer';
+import rootReducer, { RootState } from './reducers/rootReducer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import thunk from 'redux-thunk';
+import { ThunkAction } from 'redux-thunk';
+import { Action, configureStore } from '@reduxjs/toolkit';
 
-const store = createStore(rootReducer,applyMiddleware(thunk));
+const store = configureStore({
+  reducer: rootReducer
+})
+export type AppDispatch = typeof store.dispatch
+
+export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,26 +1,30 @@
-import action from '../models/action'
-const initialState = {
+import { combineReducers, createReducer } from '@reduxjs/toolkit';
+import actions from '../actions/actions';
+
+const initialState:any = {
     weatherDetails: null,
     weatherDetailsError: null,
     isLoading:false
 }
+const weatherReducer  = createReducer(initialState, (builder) => {
+    builder
+      .addCase(actions.GET_WEATHER_DETAILS, state => {
+        
+      state.isLoading = true;     
+      })
+      .addCase(actions.GET_WEATHER_DETAILS_SUCCESS, (state, action) => {
+        
+        state.weatherDetails=action.payload?.getCityByName;
+        state.isLoading= false; 
+        })
+        .addCase(actions.GET_WEATHER_DETAILS_FAILURE, (state, action) => {
+           
+            state.weatherDetailsError=action.payload;
+            state.isLoading = false;     
+            })
+  })
 
-export default function rootReducer(state = initialState, action:action) {
- 
-    switch (action.type) {
-        case 'GET_WEATHER_DETAILS_SUCCESS':
-            return {
-                ...state, weatherDetails: action.payload?.getCityByName,isLoading: false
-            };
-            case 'GET_WEATHER_DETAILS_FAILURE':
-                return {
-                    ...state, weatherDetailsError: action.payload,isLoading: false
-                };
-            case 'GET_WEATHER_DETAILS':
-                return {
-                    ...state, isLoading: true
-                };
-        default:
-            return state;
-    }
-}
+const rootReducer = combineReducers({weatherReducer:weatherReducer})
+
+export type RootState = ReturnType<typeof rootReducer>
+export default rootReducer;

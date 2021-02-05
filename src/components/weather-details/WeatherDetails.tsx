@@ -2,10 +2,12 @@ import React from 'react';
 import './WeatherDetails.css';
 import Spinner from '../spinner/Spinner';
 import { useSelector } from "react-redux";
+import { RootState } from '../../reducers/rootReducer';
 
 function WeatherDetails() {
-    const weatherDetails = useSelector((state:any) => state.weatherDetails);
-    const isLoading = useSelector((state:any) => state.isLoading);
+    const weatherDetails = useSelector((state:RootState) => state.weatherReducer.weatherDetails);
+    const isLoading = useSelector((state:RootState) => state.weatherReducer.isLoading);
+
     return (
         <div className="WeatherDetails">
             {isLoading ? (
